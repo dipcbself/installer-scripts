@@ -37,14 +37,14 @@ case "$ARCH" in
 esac
 
 GO_TARBALL="go${VERSION}.linux-${GOARCH}.tar.gz"
-DOWNLOAD_URL="https://go.dev/dl/${GO_TARBALL}"
-CHECKSUM_URL="https://go.dev/dl/${GO_TARBALL}.sha256"
+DOWNLOAD_URL="https://dl.google.com/go/${GO_TARBALL}"
+CHECKSUM_URL="https://dl.google.com/go/${GO_TARBALL}.sha256"
 
 echo ">> Downloading Go ${VERSION}..."
 curl -LO "$DOWNLOAD_URL"
 
 echo ">> Downloading checksum..."
-EXPECTED_CHECKSUM=$(curl -s "$CHECKSUM_URL")
+EXPECTED_CHECKSUM=$(curl -s "$CHECKSUM_URL" | awk '{print $1}')
 
 echo ">> Verifying checksum..."
 ACTUAL_CHECKSUM=$(sha256sum "$GO_TARBALL" | awk '{print $1}')
